@@ -1,17 +1,23 @@
 describe('Airport', function() {
 
   var gatwick;
-  var boeing;
+  var plane;
   var goodWeather;
   var badWeather;
 
   beforeEach(function() {
-    gatwick = new Airport();
-    boeing = new Plane();
-    goodWeather = new Weather();
-    badWeather = new Weather();
+    plane = 'BA123';
+    weather = jasmine.createSpyObj('weather', ['isStormy']);
+    spyOn(Math, 'random').and.returnValue(0.99)
+    gatwick = new Airport(weather)
   });
 });
+
+describe('#new airport', function() {
+  it('should have an empty loading bay when initialized', function() {
+    expect(gatwick.hangar.length).toEqual(0)
+  })
+})
 
 describe('Airport at capacity', function() {
   beforeEach(function() {
