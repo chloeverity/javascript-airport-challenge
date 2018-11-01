@@ -34,30 +34,35 @@ describe('Weather is good', function() {
   // });
   describe('#land', function() {
     it('should allow plane to land', function() {
-      expect(function() {gatwick.land(plane)}).toEqual('Plane has landed');
+      gatwick.land(plane)
+      expect(gatwick.hangar).toContain('BA123');
     });
   });
   describe('#takeoff', function() {
     it('should allow plane to land', function() {
+      gatwick.land(plane)
+      gatwick.takeOff(plane)
+      expect(gatwick.hangar).not.toContain('BA123');
 
-      expect(function() {gatwick.takeoff(plane)}).toEqual('Plane has taken off');
     });
   });
 });
 
 describe('Weather is bad', function() {
   beforeEach(function() {
-    spyOn(Math, 'random').and.returnValue(0.99)
+    stormyAirport = new Airport()
+    // spyOn(Math, 'random').and.returnValue(0.99)
   });
   describe('#land', function() {
     it('should not allow plane to land', function() {
-      gatwick._weather.isStormy(true)
-      expect(function() {gatwick.land(plane)}).toThrowError('Plane unable to land');
+      spyOn(stormyAirport._weather, 'isStormy').and.returnValue(true);
+      expect(function(){stormyAirport.land(plane);}).toThrow("Plane unable to land");
     });
   });
   describe('#takeoff', function() {
-    it('should not allow plane to land', function() {
-      expect(function() {gatwick.takeoff(plane)}).toThrowError('Plane unable to take off');
+    it('should not allow plane to take off', function() {
+      spyOn(stormyAirport._weather, 'isStormy').and.returnValue(true);
+      expect(function(){stormyAirport.takeOff(plane);}).toThrow("Plane unable to take off");
     });
   });
   });

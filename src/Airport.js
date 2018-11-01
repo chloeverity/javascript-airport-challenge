@@ -11,9 +11,9 @@ Airport.prototype.land = function(plane) {
     throw "Plane unable to land";
 } else if (this.hangar.length >= this.hangarCapacity) {
     throw "No landing space available";
-  } else {
+} else {
   this.hangar.push(plane);
-  return "Plane Landed"
+  return "Plane has landed"
   }
 };
 
